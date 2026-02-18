@@ -37,8 +37,11 @@ function setup() {
     tower = Bodies.rectangle(160, 350, 160, 310, options);
     World.add(world, tower);
 
-    angle = 15;
+    angleMode(DEGREES);
+    angle = 15  ;
     cannon = new Cannon(180, 110, 130, 100, angle);
+
+    cannonBall = new CannonBall(cannon.x, cannon.y);
     
 }
 
@@ -51,5 +54,16 @@ function draw() {
     imageMode(CENTER);
     image(towerImg, tower.position.x, tower.position.y, 160, 310);
     pop();
+    cannonBall.display();
     cannon.display();
+
+
+    
+}
+
+function keyReleased() {
+    if(keyCode === DOWN_ARROW) {    
+        cannonBall.shot();
+
+    }
 }

@@ -11,13 +11,19 @@ class Cannon {
     }
 
     display() {
+    if(keyIsDown(RIGHT_ARROW) && this.angle < 70) {
+        this.angle += 1;
+    }
+    if(keyIsDown(LEFT_ARROW) && this.angle > -30) {
+        this.angle -= 1;
+    }
        push();
        translate(this.x, this.y);
        rotate(this.angle);
        imageMode(CENTER);
-       image(this.cannonImg, this.x, this.y, this.width, this.height);
+       image(this.cannonImg, 0, 0, this.width, this.height);
        pop();
-       image(this.cannonBase, 70, 20, 200, 200);
+       image(this.cannonBase, 70, 20, 200, 200,);
        noFill();
 
     }
