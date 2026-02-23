@@ -13,6 +13,7 @@ let ground;
 let cannon;
 let angle;
 let balls = [];
+let boat;
 
 
 function preload() {
@@ -43,6 +44,9 @@ function setup() {
     cannon = new Cannon(180, 110, 130, 100, angle);
 
     cannonBall = new CannonBall(cannon.x, cannon.y);
+
+    boat = new Boat(width -79, height -60, 170, 170, -80);
+
     
 }
 
@@ -59,8 +63,8 @@ function draw() {
         showCannonBalls(balls [i]);
     }
     cannon.display();
-
-
+    Matter.Body.setVelocity(boat.body, {x: -0.9, y: 0});
+    boat.display();
     
 }
 
