@@ -15,8 +15,14 @@ class CannonBall {
         image(this.image, pos.x, pos.y, this.r, this.r);
         pop();
     }
-    shot() {
+    shoot() {
+        let newAngle = cannon.angle -28;
+        newAngle = newAngle * (3.14 / 180);
+        let velocity = p5.Vector.fromAngle(newAngle);
+        velocity.mult(0.5);
         Matter.Body.setStatic(this.body, false);
-        Matter.Body.setVelocity(this.body, {x:30, y:-20});
+        Matter.Body.setVelocity(this.body, {
+            x: velocity.x * (180 / 3.14), y: velocity.y * (180 / 3.14)});
+
     }
 }

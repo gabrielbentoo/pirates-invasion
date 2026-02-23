@@ -63,7 +63,7 @@ function draw() {
 
 function keyReleased() {
     if(keyCode === DOWN_ARROW) {    
-        cannonBall.shot();
+        cannonBall.shoot();
 
     }
 }
