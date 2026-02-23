@@ -12,6 +12,7 @@ let tower;
 let ground;
 let cannon;
 let angle;
+let balls = [];
 
 
 function preload() {
@@ -54,7 +55,9 @@ function draw() {
     imageMode(CENTER);
     image(towerImg, tower.position.x, tower.position.y, 160, 310);
     pop();
-    cannonBall.display();
+    for(let i = 0; i < balls.length; i++) {
+        showCannonBalls(balls [i]);
+    }
     cannon.display();
 
 
@@ -63,7 +66,21 @@ function draw() {
 
 function keyReleased() {
     if(keyCode === DOWN_ARROW) {    
-        cannonBall.shoot();
+        balls[balls.length -1].shoot();
 
     }
+}
+
+function keyPressed() {
+    if (keyCode === DOWN_ARROW) {
+        let cannonBall = new CannonBall(cannon.x, cannon.y);
+        balls.push(cannonBall);
+    }
+}
+
+function showCannonBalls(ball) {
+    if(ball) {
+        ball.display();
+    }
+
 }
