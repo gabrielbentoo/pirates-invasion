@@ -14,6 +14,7 @@ let cannon;
 let angle;
 let balls = [];
 let boat;
+let boats = [];
 
 
 function preload() {
@@ -59,12 +60,14 @@ function draw() {
     imageMode(CENTER);
     image(towerImg, tower.position.x, tower.position.y, 160, 310);
     pop();
+    showBoats();
     for(let i = 0; i < balls.length; i++) {
         showCannonBalls(balls [i]);
     }
     cannon.display();
-    Matter.Body.setVelocity(boat.body, {x: -0.9, y: 0});
-    boat.display();
+    // Matter.Body.setVelocity(boat.body, {x: -0.9, y: 0});
+    // boat.display();
+    
     
 }
 
@@ -88,3 +91,29 @@ function showCannonBalls(ball) {
     }
 
 }
+
+function showBoats() {
+    if(boats.length > 0) {
+        if(boats[boats.length -1] === undefined || boats[boats.length -1].body.position.x < width -300) {   
+            let positions = [-40, -60, -70, -20];
+            let position = random(positions);
+            let boat = new Boat(width, height -100, 170, 170, position);
+            boats.push(boat);
+
+
+        }
+        for(let i = 0; i < boats.length; i++) {
+            if(boats[i]) {
+                Matter.Body.setVelocity(boats [i].body, {x: -0.9, y: 0});
+                boats[i].display();
+            }
+            
+            
+        }
+        
+     }
+     else {
+        let boat = new Boat(width, height -100, 170, 170, -60);
+        boats.push(boat);
+     }
+} 
