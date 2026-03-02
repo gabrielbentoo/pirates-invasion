@@ -18,6 +18,9 @@ let boats = [];
 let boatAnimation = [];
 let boatSpritedata;
 let boatSpriteSheet;
+let brokenBoatAnimation = [];
+let brokenBoatSpriteData;
+let brokenBoatSpriteSheet;
 
 
 function preload() {
@@ -26,6 +29,8 @@ function preload() {
     towerImg = loadImage("./assets/tower.png");
     boatSpritedata = loadJSON("./assets/boat.json");
     boatSpriteSheet = loadImage("./assets/boat1.png");
+    brokenBoatSpriteData = loadJSON("./assets/broken_boat.json");
+    brokenBoatSpriteSheet = loadImage("./assets/broken-boat.png");
 
 }
 
@@ -51,13 +56,20 @@ function setup() {
 
     cannonBall = new CannonBall(cannon.x, cannon.y);
 
-    boat = new Boat(width -79, height -60, 170, 170, -80);
+    //boat = new Boat(width -79, height -60, 170, 170, -80);
 
     let boatFrames = boatSpritedata.frames;
     for(let i = 0; i < boatFrames.length; i++) {
         let pos = boatFrames[i].position;
         let img = boatSpriteSheet.get(pos.x, pos.y, pos.w, pos.h);
         boatAnimation.push(img);
+    }
+    
+    let brokenBoatFrames = brokenBoatSpriteData.frames;
+    for(let i = 0; i <brokenBoatFrames.length; i++) {
+        let pos = brokenBoatFrames[i].position;
+        let img = brokenBoatSpriteSheet.get(pos.x, pos.y, pos.w, pos.h);
+        brokenBoatAnimation.push(img);
     }
 }
 
@@ -111,7 +123,7 @@ function showBoats() {
         if(boats[boats.length -1] === undefined || boats[boats.length -1].body.position.x < width -300) {   
             let positions = [-40, -60, -70, -20];
             let position = random(positions);
-            let boat = new Boat(width, height -100, 170, 170, position);
+            let boat = new Boat(width, height -100, 170, 170, position, boatAnimation);
             boats.push(boat);
 
 
@@ -120,6 +132,7 @@ function showBoats() {
             if(boats[i]) {
                 Matter.Body.setVelocity(boats [i].body, {x: -0.9, y: 0});
                 boats[i].display();
+                boats[i].animate();
             }
             
             
@@ -127,7 +140,7 @@ function showBoats() {
         
      }
      else {
-        let boat = new Boat(width, height -100, 170, 170, -60);
+        let boat = new Boat(width, height -100, 170, 170, -60, boatAnimation);
         boats.push(boat);
      }
 } 
