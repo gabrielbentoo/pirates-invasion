@@ -21,6 +21,9 @@ let boatSpriteSheet;
 let brokenBoatAnimation = [];
 let brokenBoatSpriteData;
 let brokenBoatSpriteSheet;
+let waterSplashAnimation = [];
+let waterSplashSpriteData;
+let waterSplashSpriteSheet;
 
 
 function preload() {
@@ -31,6 +34,8 @@ function preload() {
     boatSpriteSheet = loadImage("./assets/boat1.png");
     brokenBoatSpriteData = loadJSON("./assets/broken_boat.json");
     brokenBoatSpriteSheet = loadImage("./assets/broken-boat.png");
+    waterSplashSpriteData =  loadJSON("./assets/water_splash.json");
+    waterSplashSpriteSheet = loadImage("./assets/water-splash.png");
 
 }
 
@@ -71,6 +76,13 @@ function setup() {
         let img = brokenBoatSpriteSheet.get(pos.x, pos.y, pos.w, pos.h);
         brokenBoatAnimation.push(img);
     }
+    
+    let waterSplashFrames = waterSplashSpriteData.frames;
+    for(let i = 0; i <waterSplashFrames.length; i++) {
+        let pos = waterSplashFrames[i].position;
+        let img = waterSplashSpriteSheet.get(pos.x, pos.y, pos.w, pos.h);
+        waterSplashAnimation.push(img);
+    }
 }
 
 function draw() {
@@ -84,7 +96,7 @@ function draw() {
     pop();
     showBoats();
     for(let i = 0; i < balls.length; i++) {
-        showCannonBalls(balls [i]);
+        showCannonBalls(balls [i], i);
         collisionWithBoat(i);
     }
     cannon.display();

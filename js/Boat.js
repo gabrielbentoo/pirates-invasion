@@ -1,11 +1,19 @@
 class Boat {
     constructor(x, y, width, height, boatPos, boatAnimation) {
+        let options  = {
+            restitution: 0.8, 
+            friction:1.0,
+            density:1.0,
+            label:"boat"
+        }
         this.animation = boatAnimation;
-        this.body = Bodies.rectangle(x, y, width, height);
+        this.speed = 0.05;
+        this.body = Bodies.rectangle(x, y, width, height, options);
         this.width = width;
         this.height = height;
         //this.image = loadImage("./assets/boat.png");
         this.boatPosition = boatPos;
+        this.isBroken = false;
         World.add(world, this.body);
     }
     display() {
@@ -34,6 +42,6 @@ class Boat {
 
     }
     animate() {
-        this.speed += 0.05;
+        this.speed += 0.05 % 1.1;
     }
 }
