@@ -132,7 +132,8 @@ function draw() {
 }
 // paramos aqui
 function keyReleased() {
-    if(keyCode === DOWN_ARROW) {    
+    if(keyCode === DOWN_ARROW && !isGameOver) {
+        cannonExplosion.play();   
         balls[balls.length -1].shoot();
 
     }
@@ -141,6 +142,8 @@ function keyReleased() {
 function keyPressed() {
     if (keyCode === DOWN_ARROW) {
         let cannonBall = new CannonBall(cannon.x, cannon.y);
+        cannonBall.trajectory = [];
+        Matter.Body.setAngle(cannonBall.body,  cannon.angle)
         balls.push(cannonBall);
     }
 }
@@ -148,8 +151,12 @@ function keyPressed() {
 function showCannonBalls(ball, index) {
     if(ball) {
         ball.display();
+        ball.animate();
         if(ball.body.position.x >= width || ball.body.position.y >= height -50) {
-            ball.remove(index);
+            if(!ball.isSink) {
+                waterSound.play();
+                ball.remove(index);
+            }
         }
     }
 
@@ -170,8 +177,20 @@ function showBoats() {
                 Matter.Body.setVelocity(boats [i].body, {x: -0.9, y: 0});
                 boats[i].display();
                 boats[i].animate();
+                let collision = Matter.SAT.collides(tower.body, boats[i].body);
+                if(collision.collided && !boats[i].isBroken) {
+                    if(!isLaughing && !pirateLaughSound.isPlaying()) {
+                        pirateLaughSound.play();
+                        isLaughing = true;
+                    }
+                    isGameOver = true;
+                    gameOver();
+                }
             }
-            
+            else {
+                boats[i];
+
+            }
             
         }
         
@@ -194,4 +213,20 @@ function collisionWithBoat (index) {
             }
         }
     }
+}
+function gameOver() {
+    swal(
+        {
+            title: "Fim de jogo!",
+            text: "Obrigado por jogar!",
+            imageUrl: "https://raw.githubusercontent.com/whitehatjr/PiratesInvasion/main/assets/boat.png",
+            imageSize: "150x150",
+            confirmButtonText: "Jogar novamente"
+        },
+        function (isConfirm) {
+            if(isConfirm) {
+                location.reload();
+            }
+        }
+    );
 }
